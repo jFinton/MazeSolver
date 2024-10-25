@@ -59,15 +59,27 @@ class Cell():
         if self.has_left:
             line = Line(self.p1, Point(self.p1.x, self.p2.y))
             self.win.draw_line(line, "black")
+        else:
+            line = Line(self.p1, Point(self.p1.x, self.p2.y))
+            self.win.draw_line(line, "white")
         if self.has_right:
             line = Line(Point(self.p2.x, self.p1.y), self.p2)
             self.win.draw_line(line, "black")
+        else:
+            line = Line(Point(self.p2.x, self.p1.y), self.p2)
+            self.win.draw_line(line, "white")
         if self.has_top:
             line = Line(self.p1, Point(self.p2.x, self.p1.y))
             self.win.draw_line(line, "black")
+        else:
+            line = Line(self.p1, Point(self.p2.x, self.p1.y))
+            self.win.draw_line(line, "white")
         if self.has_bottom:
             line = Line(Point(self.p1.x, self.p2.y), self.p2)
             self.win.draw_line(line, "black")
+        else:
+            line = Line(Point(self.p1.x, self.p2.y), self.p2)
+            self.win.draw_line(line, "white")
     
 
     def draw_move(self, to_cell, undo=False):
@@ -80,7 +92,7 @@ class Cell():
 
 
 class Maze():
-    def __init__(self, x1, y1, num_rows, num_cols, cell_size_x, cell_size_y, win):
+    def __init__(self, x1, y1, num_rows, num_cols, cell_size_x, cell_size_y, win=None):
         self._cells = []
         self.x1 = x1
         self.y1 = y1
@@ -90,6 +102,7 @@ class Maze():
         self.cell_size_y = cell_size_y
         self.win = win
         self._create_cells()
+        self._break_enterance_and_exit()
     
     def _create_cells(self):
         for i in range(self.num_cols):
@@ -114,3 +127,9 @@ class Maze():
             return
         self.win.redraw()
         time.sleep(0.05)
+    
+    def _break_enterance_and_exit(self):
+        self._cells[0][0].has_top = False
+        self._draw_cell(0,0)
+        self._cells[-1][-1].has_bottom = False
+        self._draw_cell(self.num_cols - 1, self.num_rows - 1)
