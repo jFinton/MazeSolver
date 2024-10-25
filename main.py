@@ -3,10 +3,17 @@ from graphics import *
 def main():
     win = Window(800, 600)
 
-    line1 = Line(Point(20, 40), Point(200,40))
-    line2 = Line(Point(50, 200), Point(100, 400))
-    win.draw_line(line1, "black")
-    win.draw_line(line2, "blue")
+    cell = Cell(win)
+    cell.draw(Point(50,50), Point(100,100))
+
+    cell = Cell(win)
+    cell.has_bottom = False
+    cell.draw(Point(100,100), Point(150,150))
+
+    cell = Cell(win)
+    cell.has_left = False
+    cell.has_right = False
+    cell.draw(Point(175,175), Point(225,225))
 
     win.wait_for_close()
 

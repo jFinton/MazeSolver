@@ -3,7 +3,7 @@ from tkinter import Tk, BOTH, Canvas
 class Window():
     def __init__(self, width, height):
         self.root = Tk()
-        self.root.title = "Maze Solver"
+        self.root.title("Maze Solver")
         self.canvas = Canvas(self.root, bg="white", height=height, width=width)
         self.canvas.pack(fill=BOTH, expand=1)
         self.is_running = False
@@ -39,3 +39,31 @@ class Line():
     
     def draw(self, canvas: Canvas, fill_color):
         canvas.create_line(self.p1.x, self.p1.y, self.p2.x, self.p2.y, fill=fill_color, width=2)
+
+
+class Cell():
+    def __init__(self, win: Window):
+        self.has_left = True
+        self.has_right = True
+        self.has_top = True
+        self.has_bottom = True
+        self.p1 = None
+        self.p2 = None
+        self.win = win
+    
+    def draw(self, p1: Point, p2: Point):
+        self.p1 = p1
+        self.p2 = p2
+        if self.has_left:
+            line = Line(self.p1, Point(self.p1.x, self.p2.y))
+            self.win.draw_line(line, "black")
+        if self.has_right:
+            line = Line(Point(self.p2.x, self.p1.y), self.p2)
+            self.win.draw_line(line, "black")
+        if self.has_top:
+            line = Line(self.p1, Point(self.p2.x, self.p1.y))
+            self.win.draw_line(line, "black")
+        if self.has_bottom:
+            line = Line(Point(self.p1.x, self.p2.y), self.p2)
+            self.win.draw_line(line, "black")
+
