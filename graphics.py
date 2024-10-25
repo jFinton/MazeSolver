@@ -66,4 +66,12 @@ class Cell():
         if self.has_bottom:
             line = Line(Point(self.p1.x, self.p2.y), self.p2)
             self.win.draw_line(line, "black")
+    
 
+    def draw_move(self, to_cell, undo=False):
+        cell_center = Point((self.p2.x + self.p1.x) / 2, (self.p2.y + self.p1.y) / 2)
+        print(f"{cell_center.x}, {cell_center.y}")
+        to_cell_center = Point((to_cell.p2.x + to_cell.p1.x) / 2, (to_cell.p2.y + to_cell.p1.y) / 2)
+        fill_color = "gray" if undo == True else "red"
+        line = Line(cell_center, to_cell_center)
+        self.win.draw_line(line, fill_color=fill_color)
